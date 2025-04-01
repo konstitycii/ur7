@@ -1,0 +1,30 @@
+HELP.md
+build/
+!**/src/main/**
+!**/src/test/**
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Gradle ###
+.gradle
+
+### Logs ###
+*.log
+
+# Ignore Gradle cache
+.gradle/
+caches/
+daemon/
+
+# Ignore build artifacts
+build/
+out/
+target/
+
+# Ignore IDE-specific files
+.idea/
+*.iml
