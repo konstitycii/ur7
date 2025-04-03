@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class ResultsTableComponent {
 
-    private SelenideElement modalTitle = $(".modal-title"),
+    private final SelenideElement modalTitle = $(".modal-title"),
             modalContent = $(".table-responsive");
 
     public void verifyModalTitle(String expectedTitle) {
