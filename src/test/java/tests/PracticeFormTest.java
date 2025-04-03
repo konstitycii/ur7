@@ -10,29 +10,27 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class PracticeFormTest {
 
+    private final PracticeFormPage formPage = new PracticeFormPage();
+
     @BeforeEach
     public void setUp() {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
-
     }
 
     @Test
     public void fillAndSubmitFullFormTest() {
-        PracticeFormPage formPage = new PracticeFormPage();
-
-// Открываем страницу и заполняем форму
         formPage.openPage()
                 .setFirstName("John")
                 .setLastName("Doe")
                 .setEmail("john.doe@example.com")
                 .selectGender("Male")
                 .setMobile("1234567890")
-                .setDateOfBirth("15", "May", "1990")
+                .setDateOfBirth("15", "May", "1990") // Теперь работает корректно
                 .setSubjects("Maths", "Physics", "Chemistry")
                 .selectHobbies("Sports", "Reading", "Music")
-                .uploadPicture("i.webp") // Файл должен быть в resources
+                .uploadPicture("i.webp")
                 .setAddress("123 Main St, Springfield")
                 .selectStateAndCity("NCR", "Delhi")
                 .submitForm();
