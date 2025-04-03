@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import pages.components.CalendarComponent;
 import pages.components.ResultsTableComponent;
 
 import static com.codeborne.selenide.Condition.*;
@@ -9,13 +10,11 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
 
-    // Локаторы элементов
-    private SelenideElement firstNameInput = $("#firstName"),
+    private final SelenideElement firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName"),
             emailInput = $("#userEmail"),
             genderRadio = $("#genterWrapper"),
             mobileInput = $("#userNumber"),
-            dateOfBirthInput = $("#dateOfBirthInput"),
             subjectsInput = $("#subjectsInput"),
             hobbiesCheckbox = $("#hobbiesWrapper"),
             pictureUpload = $("#uploadPicture"),
@@ -24,13 +23,18 @@ public class PracticeFormPage {
             cityDropdown = $("#city"),
             submitButton = $("#submit");
 
-    private ResultsTableComponent resultsTable = new ResultsTableComponent();
+    private final ResultsTableComponent resultsTable = new ResultsTableComponent();
+    private final CalendarComponent calendar = new CalendarComponent();
 
-    // Метод для открытия страницы
     public PracticeFormPage openPage() {
         open("/automation-practice-form");
-        executeJavaScript("$('#fixedban').remove()"); // Убираем баннер
-        executeJavaScript("$('footer').remove()");   // Убираем футер
+        removeBanners();
+        return this;
+    }
+
+    public PracticeFormPage removeBanners() {
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
         return this;
     }
 
@@ -45,6 +49,7 @@ public class PracticeFormPage {
         return this;
     }
 
+    // Добавляем недостающий метод для email
     public PracticeFormPage setEmail(String value) {
         emailInput.setValue(value);
         return this;
@@ -61,10 +66,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage setDateOfBirth(String day, String month, String year) {
-        dateOfBirthInput.click(); // Открываем календарь
-        $(".react-datepicker__year-select").selectOption(year);
-        $(".react-datepicker__month-select").selectOption(month);
-        $(".react-datepicker__day.react-datepicker__day--%02d".formatted(Integer.parseInt(day))).click();
+        calendar.setDate(day, month, year);
         return this;
     }
 
@@ -105,7 +107,7 @@ public class PracticeFormPage {
         return this;
     }
 
-    // Делегирование методов для работы с таблицей результатов
+    // Методы для проверки результатов
     public void verifyModalTitle(String expectedTitle) {
         resultsTable.verifyModalTitle(expectedTitle);
     }
